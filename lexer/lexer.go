@@ -23,6 +23,18 @@ func (l *Lexer) NextToken() token.Token {
 	switch l.ch {
 		case '=':
 			tok = NewToken(token.ASSIGN, l.ch)
+		case '(':
+			tok = NewToken(token.LPAREN, l.ch)
+		case ')':
+			tok = NewToken(token.RPAREN, l.ch)
+		case '{':
+			tok = NewToken(token.LBRACE, l.ch)
+		case '}':
+			tok = NewToken(token.RBRACE, l.ch)
+		case ',':
+			tok = NewToken(token.COMMA, l.ch)
+		case ';':
+			tok = NewToken(token.SEMICOLON, l.ch)
 		case '+':
 			tok = NewToken(token.PLUS, l.ch)
 		case 0:
