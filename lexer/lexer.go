@@ -1,19 +1,19 @@
 // lexer/lexer.go
 package lexer
 
-import(
-	"interpreter/token"
+import (
+	"github.com/GiacomoTravaglini/Golang-Interpreter/token"
 )
 
 type Lexer struct {
-	input string
-	position int
+	input        string
+	position     int
 	readPosition int
-	ch byte
+	ch           byte
 }
 
 func New(input string) *Lexer {
-	l := &Lexer{input : input}
+	l := &Lexer{input: input}
 	l.readChar()
 	return l
 }
@@ -24,49 +24,49 @@ func (l *Lexer) NextToken() token.Token {
 	l.skipWhitespace()
 
 	switch l.ch {
-		case '(':
-			tok = NewToken(token.LPAREN, l.ch)
-		case ')':
-			tok = NewToken(token.RPAREN, l.ch)
-		case '{':
-			tok = NewToken(token.LBRACE, l.ch)
-		case '}':
-			tok = NewToken(token.RBRACE, l.ch)
-		case ',':
-			tok = NewToken(token.COMMA, l.ch)
-		case ';':
-			tok = NewToken(token.SEMICOLON, l.ch)
-		case '+':
-			tok = NewToken(token.PLUS, l.ch)
-		case '-':
-			tok = NewToken(token.MINUS, l.ch)
-		case '=':
-			tok = NewToken(token.ASSIGN, l.ch)
-		case '!':
-			tok = NewToken(token.BANG, l.ch)
-		case '*':
-			tok = NewToken(token.ASTERISK, l.ch)
-		case '/':
-			tok = NewToken(token.SLASH, l.ch)
-		case '<':
-			tok = NewToken(token.LT, l.ch)
-		case '>':
-			tok = NewToken(token.GT, l.ch)
-		case 0:
-			tok.Literal = ""
-			tok.Type = token.EOF
-		default:
-			if isLetter(l.ch) {
-				tok.Literal = l.readIdentifier()
-				tok.Type = token.LookupIdent(tok.Literal)
-				return tok
-			} else if isDigit(l.ch) {
-				tok.Literal = l.readNumber()
-				tok.Type = token.INT
-				return tok
-			} else {
-				tok = NewToken(token.ILLEGAL, l.ch)
-			}
+	case '(':
+		tok = NewToken(token.LPAREN, l.ch)
+	case ')':
+		tok = NewToken(token.RPAREN, l.ch)
+	case '{':
+		tok = NewToken(token.LBRACE, l.ch)
+	case '}':
+		tok = NewToken(token.RBRACE, l.ch)
+	case ',':
+		tok = NewToken(token.COMMA, l.ch)
+	case ';':
+		tok = NewToken(token.SEMICOLON, l.ch)
+	case '+':
+		tok = NewToken(token.PLUS, l.ch)
+	case '-':
+		tok = NewToken(token.MINUS, l.ch)
+	case '=':
+		tok = NewToken(token.ASSIGN, l.ch)
+	case '!':
+		tok = NewToken(token.BANG, l.ch)
+	case '*':
+		tok = NewToken(token.ASTERISK, l.ch)
+	case '/':
+		tok = NewToken(token.SLASH, l.ch)
+	case '<':
+		tok = NewToken(token.LT, l.ch)
+	case '>':
+		tok = NewToken(token.GT, l.ch)
+	case 0:
+		tok.Literal = ""
+		tok.Type = token.EOF
+	default:
+		if isLetter(l.ch) {
+			tok.Literal = l.readIdentifier()
+			tok.Type = token.LookupIdent(tok.Literal)
+			return tok
+		} else if isDigit(l.ch) {
+			tok.Literal = l.readNumber()
+			tok.Type = token.INT
+			return tok
+		} else {
+			tok = NewToken(token.ILLEGAL, l.ch)
+		}
 	}
 	l.readChar()
 	return tok
@@ -87,7 +87,7 @@ func (l *Lexer) readIdentifier() string {
 	for isLetter(l.ch) {
 		l.readChar()
 	}
-	return l.input[position : l.position]
+	return l.input[position:l.position]
 }
 
 func (l *Lexer) readNumber() string {
@@ -95,7 +95,7 @@ func (l *Lexer) readNumber() string {
 	for isDigit(l.ch) {
 		l.readChar()
 	}
-	return l.input[position : l.position]
+	return l.input[position:l.position]
 }
 
 func isLetter(ch byte) bool {
